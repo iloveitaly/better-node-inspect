@@ -1,0 +1,12 @@
+{
+  "name": "better-node-repl",
+  "version": "1.0.0",
+  "description": "a sane node repl",
+  "main": "index.js",
+  "bin": "inspect.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT"
+}
