@@ -1,12 +1,12 @@
 {
-  "name": "better-node-repl",
+  "name": "better-node-inspect",
   "version": "1.0.0",
-  "description": "a sane node repl",
+  "description": "A command line node debugger that isn't terrible",
   "main": "index.js",
-  "bin": "inspect.js",
+  "bin": "bin/run.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Michael Bianco <mike@mikebian.co>",
   "license": "MIT"
 }

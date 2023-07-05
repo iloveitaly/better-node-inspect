@@ -1,0 +1,1 @@
+require('./src/repl_globals.js')
