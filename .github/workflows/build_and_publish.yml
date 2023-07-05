@@ -29,8 +29,8 @@ jobs:
 
       - name: Make sure it runs
         run: |
-          # TODO would be better to do a output testr
-          npx better-node-inspect --port=0 -e "console.log('Hello World')" < /dev/null
+          # TODO would be better to do a output test
+          npx better-node-inspect --port=0 -e "console.log('Hello World')" <<< '.exit'
 
       - name: Conventional Changelog Action
         id: changelog
@@ -44,6 +44,7 @@ jobs:
         if: ${{ steps.changelog.outputs.skipped == 'false' }}
         run: npm publish
         env:
+          # `gh secret set NPM_TOKEN --app actions --body $PYPI_API_TOKEN`
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       # - name: Github Release
