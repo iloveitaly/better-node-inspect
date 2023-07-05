@@ -32,7 +32,8 @@ jobs:
         run: |
           # TODO would be better to do a output test
           # npx better-node-inspect --port=0 -e "console.log('Hello World')" <<< '.exit'
-          npx better-node-inspect
+          # npx better-node-inspect
+          node bin/run.js
 
       - name: Conventional Changelog Action
         id: changelog
