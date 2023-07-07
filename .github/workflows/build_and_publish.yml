@@ -35,7 +35,7 @@ jobs:
           # npx better-node-inspect
           # node --expose-internals -r internal/test/binding --debug-port=0 bin/run.js
           which node
-          /usr/bin/env node
+          /usr/bin/env node --version
           bin/run.js
 
       - name: Conventional Changelog Action
