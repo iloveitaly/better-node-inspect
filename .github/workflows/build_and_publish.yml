@@ -31,13 +31,15 @@ jobs:
         timeout-minutes: 1
         run: |
           # TODO would be better to do a output test
-          # npx better-node-inspect --port=0 -e "console.log('Hello World')" <<< '.exit'
-          # npx better-node-inspect
-          # node --expose-internals -r internal/test/binding --debug-port=0 bin/run.js
-          # which node
-          # /usr/bin/env node --version
-          # node inspect
           bin/run.js
+
+          if [ $? -eq 9 ]
+          then
+              # this is the expected exit code
+          else
+            echo "inspector did not exit properly"
+            exit 1
+          fi
 
       - name: Conventional Changelog Action
         id: changelog
