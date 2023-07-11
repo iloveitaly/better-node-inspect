@@ -35,9 +35,9 @@ jobs:
           # TODO would be better to do a output test
           node --expose-internals -r internal/test/binding bin/run.js
 
-          if [ $? -eq 9 ]
-          then
+          if [ $? -eq 9 ]; then
               # this is the expected exit code
+              :
           else
             echo "inspector did not exit properly"
             exit 1
