@@ -31,7 +31,7 @@ jobs:
         timeout-minutes: 1
         run: |
           # TODO would be better to do a output test
-          bin/run.js
+          node bin/run.js
 
           if [ $? -eq 9 ]
           then
