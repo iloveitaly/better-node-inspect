@@ -31,7 +31,7 @@ jobs:
         timeout-minutes: 1
         run: |
           # TODO would be better to do a output test
-          node bin/run.js
+          node --expose-internals -r internal/test/binding bin/run.js
 
           if [ $? -eq 9 ]
           then
