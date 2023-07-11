@@ -36,7 +36,7 @@ jobs:
           # node --expose-internals -r internal/test/binding --debug-port=0 bin/run.js
           # which node
           # /usr/bin/env node --version
-          node inspect
+          # node inspect
           bin/run.js
 
       - name: Conventional Changelog Action
