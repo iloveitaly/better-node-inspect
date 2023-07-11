@@ -30,9 +30,10 @@ jobs:
       - name: Make sure it runs
         timeout-minutes: 1
         run: |
+          # turn off error reporting to test the resulting exit code
           set +e
 
-          # TODO would be better to do a output test
+          # TODO would be better to do a output test, but I've already wasted enough time on node
           node --expose-internals -r internal/test/binding bin/run.js
 
           if [ $? -eq 9 ]; then
@@ -52,7 +53,7 @@ jobs:
           output-file: "CHANGELOG.md"
 
       - name: Publish to NPM
-        if: ${{ steps.changelog.outputs.skipped == 'false' }}
+        # if: ${{ steps.changelog.outputs.skipped == 'false' }}
         run: npm publish
         env:
           # `gh secret set NPM_TOKEN --app actions --body $PYPI_API_TOKEN`
