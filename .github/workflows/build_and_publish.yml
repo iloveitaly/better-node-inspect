@@ -30,6 +30,8 @@ jobs:
       - name: Make sure it runs
         timeout-minutes: 1
         run: |
+          set +e
+
           # TODO would be better to do a output test
           node --expose-internals -r internal/test/binding bin/run.js
 
