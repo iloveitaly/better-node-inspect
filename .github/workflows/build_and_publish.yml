@@ -56,7 +56,7 @@ jobs:
         # if: ${{ steps.changelog.outputs.skipped == 'false' }}
         run: npm publish
         env:
-          # `gh secret set NPM_TOKEN --app actions --body $PYPI_API_TOKEN`
+          # `gh secret set NPM_TOKEN --app actions --body $NPM_TOKEN`
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Github Release
