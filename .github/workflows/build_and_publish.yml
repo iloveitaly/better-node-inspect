@@ -26,6 +26,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: "${{ steps.versions.outputs.nodejs }}"
+          registry-url: 'https://registry.npmjs.org'
 
       - name: Make sure it runs
         timeout-minutes: 1
