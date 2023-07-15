@@ -578,17 +578,23 @@ function createRepl(inspector) {
     }
   }
 
+  // preprocess debugger repl input to allow parentheses-less `exec` and `p`
   function prepareControlCode(input) {
     if (input === '\n') return lastCommand;
+
     // Add parentheses: exec process.title => exec("process.title");
     // TODO all helper functions should auto-add parentheses
-    const match = RegExpPrototypeExec(/^\s*(?:exec|p)\s+([^\n]*)/, input);
-    if (match) {
-      lastCommand = `exec(${JSONStringify(match[1])})`;
-    } else {
-      lastCommand = input;
+    const execMatch = RegExpPrototypeExec(/^\s*(?:exec|p)\s+([^\n]*)/, input);
+    if (execMatch) {
+      return `exec(${JSONStringify(execMatch[1])})`;
     }
-    return lastCommand;
+
+    const prettyPrintMatch = RegExpPrototypeExec(/^\s*(?:pretty-print|pp)\s+([^\n]*)/, input);
+    if(prettyPrintMatch) {
+      return `exec(${JSONStringify('console.dir(' + prettyPrintMatch[1] + ', {depth: null, colors: true, maxArrayLength: null, maxStringLength: null})')})`;
+    }
+
+    return input;
   }
 
   async function evalInCurrentContext(code) {
