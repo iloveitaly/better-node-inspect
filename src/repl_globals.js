@@ -15,6 +15,9 @@ const util = require("util")
 
 // TODO check if globals are accessible in a repl
 
+// TODO https://stackoverflow.com/questions/60558170/how-to-auto-reload-files-in-node-js-while-using-esm
+// global.awaitReload
+
 // https://stackoverflow.com/questions/5670752/how-can-i-pretty-print-json-using-node-js
 global.dir = (ob) => process.stdout.write(require("util").inspect(ob, {depth: null, colors: true}))
 
@@ -84,20 +87,39 @@ async function repl(context = {}) {
 
   console.log("Starting REPL...")
 
+
   const repl = require("repl")
   const replServer = repl.start({
-    prompt: "repl> ",
+    prompt: "❯ ",
     input: process.stdin,
     output: process.stdout,
     useGlobal: true,
     preview: false,
   })
 
+  // transform import statements into `await import` statements
+  const _eval = replServer.eval
+  async function inlineImports(cmd, context, filename, callback) {
+    if (cmd.startsWith("import")) {
+      cmd = cmd.replace(/import (.+) from (.+)/, "let $1 = await import($2);")
+    }
+
+    _eval(cmd, context, filename, callback)
+  }
+  replServer.eval = inlineImports
+
+  replServer.setupHistory(
+    '.node_repl_history',
+    (error, replServer) => {
+      if (error) throw error
+    }
+  )
+
   // TODO tie into the ts-node repl
   // TODO remove all 'const ' from the input to avoid redeclaring variables error
 
   // list out all local variables
-  replServer.defineCommand("vars", {
+  replServer.defineCommand("locals", {
     help: "List all local variables",
     action: function () {
       this.displayPrompt()
