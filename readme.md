@@ -1,6 +1,6 @@
-# Better Node Inspect: A Node Command Line Debugger That Isn't Terrible
+# Better Node Inspect: A Better Node Command Line Debugger 
 
-Very WIP.
+Let's make `node inspect` better on the command line!
 
 ## Goals
 
