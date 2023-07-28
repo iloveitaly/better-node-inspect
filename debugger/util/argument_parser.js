@@ -58,4 +58,48 @@ function parseArguments(argv) {
   return options;
 }
 
+function parseArgv(args) {
+  const target = ArrayPrototypeShift(args);
+  let host = '127.0.0.1';
+  let port = 9229;
+  let isRemote = false;
+  let script = target;
+  let scriptArgs = args;
+
+  const hostMatch = RegExpPrototypeExec(/^([^:]+):(\d+)$/, target);
+  const portMatch = RegExpPrototypeExec(/^--port=(\d+)$/, target);
+
+  if (hostMatch) {
+    // Connecting to remote debugger
+    host = hostMatch[1];
+    port = Number(hostMatch[2]);
+    isRemote = true;
+    script = null;
+  } else if (portMatch) {
+    // Start on custom port
+    port = Number(portMatch[1]);
+    script = args[0];
+    scriptArgs = ArrayPrototypeSlice(args, 1);
+  } else if (args.length === 1 && RegExpPrototypeExec(/^\d+$/, args[0]) !== null &&
+             target === '-p') {
+    // Start debugger against a given pid
+    const pid = Number(args[0]);
+    try {
+      process._debugProcess(pid);
+    } catch (e) {
+      if (e.code === 'ESRCH') {
+        process.stderr.write(`Target process: ${pid} doesn't exist.\n`);
+        process.exit(kGenericUserError);
+      }
+      throw e;
+    }
+    script = null;
+    isRemote = true;
+  }
+
+  return {
+    host, port, isRemote, script, scriptArgs,
+  };
+}
+
 module.exports = { parseArguments };
