@@ -1,31 +1,39 @@
 const {
+  ArrayPrototypeShift,
   ArrayPrototypeSplice,
-  StringPrototypeSplit
+  ArrayPrototypeIncludes,
+  StringPrototypeSplit,
+  RegExpPrototypeExec,
 } = primordials;
 
-// Helper function to parse a boolean
 function parseBoolean(value) {
   return value === 'true' || value === '1' || value === 'yes';
 }
 
+function validatePauseOnExceptionState(value) {
+  const validStates = ['uncaught', 'none', 'all'];
+  if (!ArrayPrototypeIncludes(validStates, value)) {
+    throw new Error(`Invalid state passed for pauseOnExceptionState: ${value}. Must be one of 'uncaught', 'none', or 'all'.`);
+  }
+  return value;
+}
+
 function parseArguments(argv) {
-  // Default options
+  const legacyArguments = processLegacyArgs(argv)
+
   let options = {
-    port: undefined,
     pauseOnExceptionState: undefined,
     inspectResumeOnStart: undefined
   }
 
-  // Parsing process.env.NODE_INSPECT_OPTIONS
+  // `NODE_INSPECT_OPTIONS` is parsed first and can be overwritten by command line arguments
+
   if (process.env.NODE_INSPECT_OPTIONS) {
     const envOptions = StringPrototypeSplit(process.env.NODE_INSPECT_OPTIONS, ' ');
     for (let i = 0; i < envOptions.length; i++) {
       switch (envOptions[i]) {
-        case '--port':
-          options.port = envOptions[++i];
-          break;
         case '--pause-on-exception-state':
-          options.pauseOnExceptionState = envOptions[++i];
+          options.pauseOnExceptionState = validatePauseOnExceptionState(envOptions[++i]);
           break;
         case '--inspect-resume-on-start':
           options.inspectResumeOnStart = parseBoolean(envOptions[++i]);
@@ -34,15 +42,10 @@ function parseArguments(argv) {
     }
   }
 
-  // Parsing argv
   for (let i = 0; i < argv.length;) {
     switch (argv[i]) {
-      case '--port':
-        options.port = argv[i+1];
-        ArrayPrototypeSplice(argv, i, 2);
-        break;
       case '--pause-on-exception-state':
-        options.pauseOnExceptionState = argv[i+1];
+        options.pauseOnExceptionState = validatePauseOnExceptionState(argv[i+1]);
         ArrayPrototypeSplice(argv, i, 2);
         break;
       case '--inspect-resume-on-start':
@@ -55,10 +58,13 @@ function parseArguments(argv) {
     }
   }
 
-  return options;
+  return {...options, ...legacyArguments};
 }
 
-function parseArgv(args) {
+// the legacy `node inspect` options assumed the first argument was the target
+// to avoid breaking existing scripts, we maintain this behavior
+
+function processLegacyArgs(args) {
   const target = ArrayPrototypeShift(args);
   let host = '127.0.0.1';
   let port = 9229;
@@ -102,4 +108,4 @@ function parseArgv(args) {
   };
 }
 
-module.exports = { parseArguments };
+module.exports = parseArguments;
