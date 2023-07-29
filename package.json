@@ -1,6 +1,6 @@
 {
   "name": "better-node-inspect",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A command line node debugger that isn't terrible",
   "main": "index.js",
   "bin": "bin/run.js",
