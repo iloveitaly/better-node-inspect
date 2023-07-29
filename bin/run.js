@@ -1,10 +1,9 @@
-#!/usr/bin/env node --expose-internals -r internal/test/binding --debug-port=0
+#!/usr/bin/env node --expose-internals -r internal/test/binding
 
-process.env.NODE_INSPECT_RESUME_ON_START ||= 1;
+// process.env.NODE_INSPECT_RESUME_ON_START ||= 1;
 // process.env.NODE_INSPECT_PAUSE_ON_EXCEPTION_STATE ||= 'uncaught';
 
 // hijack `require` to load debugger module from this package
-
 const Mod = require('module');
 const req = Mod.prototype.require;
 

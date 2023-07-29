@@ -32,10 +32,11 @@ const {
   AbortController,
 } = require('internal/abort_controller');
 
-const { 0: InspectClient, 1: createRepl } =
+const { 0: InspectClient, 1: createRepl, 2: parseArguments } =
     [
       require('internal/debugger/inspect_client'),
       require('internal/debugger/inspect_repl'),
+      require('internal/debugger/util/argument_parser'),
     ];
 
 const debuglog = util.debuglog('inspect');
@@ -301,7 +302,7 @@ function startInspect(argv = ArrayPrototypeSlice(process.argv, 2),
     process.exit(kInvalidCommandLineArgument);
   }
 
-  const options = parseArgv(argv);
+  const options = parseArguments(argv);
   const inspector = new NodeInspector(options, stdin, stdout);
 
   stdin.resume();
