@@ -7,7 +7,7 @@
     "inspect",
     "cli"
   ],
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "A modern node inspector optimized for command line usage (like ipython, pry, iex, etc.)",
   "homepage": "https://github.com/iloveitaly/better-node-inspect",
   "main": "index.js",
