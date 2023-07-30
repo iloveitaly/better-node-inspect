@@ -1,9 +1,12 @@
 const {
   ArrayPrototypeShift,
-  ArrayPrototypeSplice,
   ArrayPrototypeIncludes,
   StringPrototypeSplit,
   RegExpPrototypeExec,
+  RegExpPrototypeTest,
+  StringPrototypeIndexOf,
+  StringPrototypeSlice,
+  ArrayPrototypeJoin,
 } = primordials;
 
 function parseBoolean(value) {
@@ -18,6 +21,44 @@ function validatePauseOnExceptionState(value) {
   return value;
 }
 
+function splitOption(option) {
+  const index = StringPrototypeIndexOf(option, '=');
+  return [StringPrototypeSlice(option, 0, index), StringPrototypeSlice(option, index + 1)];
+}
+
+function handleArg(options, arg, nextArg) {
+  let key, value;
+  if (RegExpPrototypeTest(/=.+/, arg)) {
+    [key, value] = splitOption(arg);
+  } else {
+    key = arg;
+    value = nextArg;
+  }
+
+  switch (key) {
+    case '--pause-on-exception-state':
+      options.pauseOnExceptionState = validatePauseOnExceptionState(value);
+      break;
+    case '--inspect-resume-on-start':
+      options.inspectResumeOnStart = parseBoolean(value);
+      break;
+  }
+  return options;
+}
+
+function parseOptions(source, options) {
+  if (source) {
+    const optionsArr = StringPrototypeSplit(source, ' ');
+    for (let i = 0; i < optionsArr.length; i++) {
+      options = handleArg(options, optionsArr[i], optionsArr[i+1]);
+    }
+  }
+  return options;
+}
+
+// the legacy `node inspect` options assumed the first argument was the target
+// to avoid breaking existing scripts, we maintain this behavior
+
 function parseArguments(argv) {
   const legacyArguments = processLegacyArgs(argv)
 
@@ -26,43 +67,12 @@ function parseArguments(argv) {
     inspectResumeOnStart: undefined
   }
 
-  // `NODE_INSPECT_OPTIONS` is parsed first and can be overwritten by command line arguments
-
-  if (process.env.NODE_INSPECT_OPTIONS) {
-    const envOptions = StringPrototypeSplit(process.env.NODE_INSPECT_OPTIONS, ' ');
-    for (let i = 0; i < envOptions.length; i++) {
-      switch (envOptions[i]) {
-        case '--pause-on-exception-state':
-          options.pauseOnExceptionState = validatePauseOnExceptionState(envOptions[++i]);
-          break;
-        case '--inspect-resume-on-start':
-          options.inspectResumeOnStart = parseBoolean(envOptions[++i]);
-          break;
-      }
-    }
-  }
-
-  for (let i = 0; i < argv.length;) {
-    switch (argv[i]) {
-      case '--pause-on-exception-state':
-        options.pauseOnExceptionState = validatePauseOnExceptionState(argv[i+1]);
-        ArrayPrototypeSplice(argv, i, 2);
-        break;
-      case '--inspect-resume-on-start':
-        options.inspectResumeOnStart = parseBoolean(argv[i+1]);
-        ArrayPrototypeSplice(argv, i, 2);
-        break;
-      default:
-        i++;
-        break;
-    }
-  }
+  // arguments passed over the CLI take precedence over environment variables
+  options = parseOptions(process.env.NODE_INSPECT_OPTIONS, options);
+  options = parseOptions(ArrayPrototypeJoin(argv, ' '), options);
 
   return {...options, ...legacyArguments};
 }
-
-// the legacy `node inspect` options assumed the first argument was the target
-// to avoid breaking existing scripts, we maintain this behavior
 
 function processLegacyArgs(args) {
   const target = ArrayPrototypeShift(args);

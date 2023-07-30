@@ -1,7 +1,6 @@
 #!/usr/bin/env node --expose-internals -r internal/test/binding
 
-// process.env.NODE_INSPECT_RESUME_ON_START ||= 1;
-// process.env.NODE_INSPECT_PAUSE_ON_EXCEPTION_STATE ||= 'uncaught';
+process.env.NODE_INSPECT_OPTIONS = '--inspect-resume-on-start=true'
 
 // hijack `require` to load debugger module from this package
 const Mod = require('module');
