@@ -28,18 +28,14 @@ function toJson(obj) {
 }
 global.toJson = toJson
 
+// TODO detect if object or string
 // https://stackoverflow.com/questions/5670752/how-can-i-pretty-print-json-using-node-js
 function toFile(obj, path) {
   var fs = require('fs');
 
-  var myData = {
-    name:'test',
-    version:'1.0'
-  }
-
   var outputFilename = '/tmp/my.json';
 
-  fs.writeFile(outputFilename, JSON.stringify(myData, null, 4), function(err) {
+  fs.writeFile(outputFilename, JSON.stringify(obj, null, 4), function(err) {
       if(err) {
         console.log(err);
       } else {
