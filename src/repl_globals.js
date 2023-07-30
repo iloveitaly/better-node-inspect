@@ -44,6 +44,19 @@ function toFile(obj, path) {
   });
 }
 
+function writeStdout(str) {
+  require("fs").writeSync(1, str);
+  return void 0;
+}
+global.writeStdout = writeStdout
+
+function inspectObject(obj) {
+  const util = require("node:util")
+  const inspectOutput = util.inspect(obj, {depth: null, colors: true, maxArrayLength: null, maxStringLength: null})
+  return inspectOutput
+}
+global.inspectObject = inspectObject
+
 // copyToClipboard = (text) => {
 function copyToClipboard(text) {
   require("child_process").spawnSync("/usr/bin/pbcopy", [], {
