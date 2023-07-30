@@ -68,6 +68,22 @@ function copyToClipboard(text) {
 }
 global.copyToClipboard = copyToClipboard
 
+function stringFromClipboard() {
+  const result = require("child_process").spawnSync("/usr/bin/pbpaste", [], {
+    env: {
+      LC_CTYPE: "UTF-8",
+    },
+  });
+
+  if (result.error) {
+    console.error('Error:', result.error);
+    return null;
+  }
+
+  return result.stdout.toString();
+}
+global.stringFromClipboard = stringFromClipboard
+
 // https://stackoverflow.com/questions/332422/get-the-name-of-an-objects-type
 function getClassName(target) {
   const funcNameRegex = /function (.{1,})\(/
