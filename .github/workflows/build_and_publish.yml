@@ -68,8 +68,9 @@ jobs:
           body: ${{ steps.changelog.outputs.clean_changelog }}
           tag_name: ${{ steps.changelog.outputs.tag }}
 
-      -
-        uses: jaid/action-sync-node-meta@v2.0.0
-        with:
-          direction: overwrite-github
-          githubToken: ${{ secrets.github_token }}
+      # TODO this is broken https://github.com/Jaid/action-sync-node-meta/issues/30
+      # -
+      #   uses: jaid/action-sync-node-meta@v2.0.0
+      #   with:
+      #     direction: overwrite-github
+      #     githubToken: ${{ secrets.github_token }}
