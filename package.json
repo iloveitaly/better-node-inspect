@@ -1,7 +1,15 @@
 {
   "name": "better-node-inspect",
+  "keywords": [
+    "debugger",
+    "node",
+    "debug",
+    "inspect",
+    "cli"
+  ],
   "version": "0.2.0",
-  "description": "A command line node debugger that isn't terrible",
+  "description": "A modern node inspector optimized for command line usage (like ipython, pry, iex, etc.)",
+  "homepage": "https://github.com/iloveitaly/better-node-inspect",
   "main": "index.js",
   "bin": "bin/run.js",
   "scripts": {
