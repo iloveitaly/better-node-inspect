@@ -1,3 +1,12 @@
+## [0.3.1](https://github.com/iloveitaly/better-node-inspect/compare/v0.3.0...v0.3.1) (2023-07-31)
+
+
+### Bug Fixes
+
+* missing primordial slice import ([2c8078c](https://github.com/iloveitaly/better-node-inspect/commit/2c8078ce0a96e0a9f7da217d1fe40e02c4e63a6b))
+
+
+
 # [0.3.0](https://github.com/iloveitaly/better-node-inspect/compare/v0.2.0...v0.3.0) (2023-07-30)
 
 
