@@ -1,5 +1,6 @@
 const {
   ArrayPrototypeShift,
+  ArrayPrototypeSlice,
   ArrayPrototypeIncludes,
   StringPrototypeSplit,
   RegExpPrototypeExec,
