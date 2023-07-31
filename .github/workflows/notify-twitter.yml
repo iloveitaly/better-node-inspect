@@ -3,6 +3,8 @@ name: Notify twitter
 on:
   workflow_dispatch:
   release:
+    # publishes is fired when a release is created programmatically
+    # https://stackoverflow.com/questions/59319281/github-action-different-between-release-created-and-published
     types: [published]
 
 jobs:
