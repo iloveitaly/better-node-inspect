@@ -73,7 +73,7 @@ jobs:
         with:
           TYPE: npm
           PATH: package.json
-          TOKEN: ${{ secrets.github_token }}
+          TOKEN: ${{ secrets.GH_PERSONAL_TOKEN }}
 
       # TODO this is broken https://github.com/Jaid/action-sync-node-meta/issues/30
       # -
