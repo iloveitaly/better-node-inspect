@@ -68,6 +68,13 @@ jobs:
           body: ${{ steps.changelog.outputs.clean_changelog }}
           tag_name: ${{ steps.changelog.outputs.tag }}
 
+      - name: Repo Sync
+        uses: kbrashears5/github-action-repo-sync@v1.0.0
+        with:
+          TYPE: npm
+          PATH: package.json
+          TOKEN: ${{ secrets.github_token }}
+
       # TODO this is broken https://github.com/Jaid/action-sync-node-meta/issues/30
       # -
       #   uses: jaid/action-sync-node-meta@v2.0.0
