@@ -70,6 +70,6 @@ jobs:
 
       - name: Sync Repository Metata
         # uses: kbrashears5/github-action-repo-sync@v1.0.0
-        uses: iloveitaly/github-action-repo-sync@main
+        uses: iloveitaly/github-action-repo-sync@python
         with:
           TOKEN: ${{ secrets.GH_PERSONAL_TOKEN }}
