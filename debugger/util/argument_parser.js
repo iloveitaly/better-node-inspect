@@ -10,6 +10,12 @@ const {
   ArrayPrototypeJoin,
 } = primordials;
 
+const {
+  exitCodes: {
+    kGenericUserError,
+  },
+} = internalBinding('errors');
+
 function parseBoolean(value) {
   return value === 'true' || value === '1' || value === 'yes';
 }
@@ -74,6 +80,9 @@ function parseArguments(argv) {
 
   return {...options, ...legacyArguments};
 }
+
+// the legacy `node inspect` options assumed the first argument was the target
+// to avoid breaking existing scripts, we maintain this behavior
 
 function processLegacyArgs(args) {
   const target = ArrayPrototypeShift(args);
