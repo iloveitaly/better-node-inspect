@@ -1,3 +1,12 @@
+## [0.3.2](https://github.com/iloveitaly/better-node-inspect/compare/v0.3.1...v0.3.2) (2023-08-03)
+
+
+### Bug Fixes
+
+* legacy argument parsing is missing an import ([5528923](https://github.com/iloveitaly/better-node-inspect/commit/5528923124a44d435c9aff10c5412ff3975e2046))
+
+
+
 ## [0.3.1](https://github.com/iloveitaly/better-node-inspect/compare/v0.3.0...v0.3.1) (2023-07-31)
 
 
