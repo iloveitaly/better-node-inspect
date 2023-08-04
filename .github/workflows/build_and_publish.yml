@@ -67,6 +67,8 @@ jobs:
           # output options: https://github.com/TriPSs/conventional-changelog-action#outputs
           body: ${{ steps.changelog.outputs.clean_changelog }}
           tag_name: ${{ steps.changelog.outputs.tag }}
+          # required in order for release events to be fired
+          token: ${{ secrets.GH_PERSONAL_TOKEN }}
 
       - name: Sync Repository Metata
         # uses: kbrashears5/github-action-repo-sync@v1.0.0
