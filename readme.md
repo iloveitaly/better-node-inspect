@@ -32,6 +32,7 @@ This isn't going to all be possible, but here's my wishlist:
 * Sourcemap-aware file and line locations. If you use `tsx`, or any other transpilation tool, the source and line + column numbers are based on the transpiled code, not the original source.
 * Avoid `process.stdout` breaking when certain content is passed to it. When the debugger is active, the event loop is paused, and the `drain` event is not processed causing `process.stdout.write` to stop working entirely.
 * Works with test runners like jest and vitest
+* Automatically start a debugger session when an exception is thrown in a test
 
 ## What's done
 
@@ -78,6 +79,7 @@ It's always helpful to understand how things are wired together when you are hac
 - [Debugger.on events](https://github.com/iloveitaly/node/blob/6144954c95d96146a3360c93310d9de562721ea0/deps/v8/include/js_protocol-1.3.json#L771)
 - [Visual/prettier debugger protocol documentation](https://chromedevtools.github.io/devtools-protocol/1-3/Runtime/)
 - [Where `node inspect` is run from](https://github.com/iloveitaly/node/blob/6144954c95d96146a3360c93310d9de562721ea0/lib/internal/main/inspect.js#L17)
+- [Where expectation errors are throw in jest](https://github.com/jestjs/jest/blob/0fd5b1c37555f485c56a6ad2d6b010a72204f9f6/packages/expect/src/index.ts#L335-L339). If you jump two frames up from here, you'll end up in your test code.
 
 ## Inspiration
 
