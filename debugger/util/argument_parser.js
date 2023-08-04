@@ -8,6 +8,7 @@ const {
   StringPrototypeIndexOf,
   StringPrototypeSlice,
   ArrayPrototypeJoin,
+  Number
 } = primordials;
 
 const {
