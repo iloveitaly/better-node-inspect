@@ -56,10 +56,16 @@ One of my biggest gripes with the nodejs ecosystem is how fragmented it is. My g
 
 ## Usage
 
+Install:
+
+```bash
+npm install better-node-inspect --save-dev
+```
+
 In order to use the improved inspector:
 
 ```bash
-better-node-repl the-file.js
+better-node-inspect the-file.js
 ```
 
 To use the repl utilities make sure you import the module:
