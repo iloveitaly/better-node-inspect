@@ -1,3 +1,6 @@
+![Last version](https://img.shields.io/github/tag/iloveitaly/better-node-inspect.svg?style=flat-square)
+[![NPM Status](https://img.shields.io/npm/dm/better-node-inspect.svg?style=flat-square)](https://www.npmjs.org/package/better-node-inspect)
+
 # Better Node Inspect: A Better Node Command Line Debugger
 
 Let's make `node inspect` better on the command line! I'm used to amazing CLI debugging tools like ipython, iex, and pry. I want to bring some of that magic to node.
