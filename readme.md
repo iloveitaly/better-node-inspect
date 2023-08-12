@@ -77,6 +77,33 @@ To use the repl utilities make sure you import the module:
 import "better-node-inspect"
 ```
 
+## Troubleshooting
+
+If you are running into issues running the script, check to make sure `NODE_OPTIONS` doesn't contain any additional config. Sometimes VS Code
+can inject `NODE_OPTIONS` into the environment, which can cause issues. Here's the error I got when `NODE_OPTIONS` was set by VS Code.
+
+```text
+node:internal/assert:14
+    throw new ERR_INTERNAL_ASSERTION(message);
+    ^
+
+Error [ERR_INTERNAL_ASSERTION]: This is caused by either a bug in Node.js or incorrect usage of Node.js internals.
+Please open an issue with this stack trace at https://github.com/nodejs/node/issues
+
+    at new NodeError (node:internal/errors:405:5)
+    at assert (node:internal/assert:14:11)
+    at setupUserModules (node:internal/process/pre_execution:126:3)
+    at prepareExecution (node:internal/process/pre_execution:118:5)
+    at prepareMainThreadExecution (node:internal/process/pre_execution:42:3)
+    at Object.<anonymous> (/Users/mike/Projects/javascript/better-node-inspect/main/inspect.js:10:1)
+    at Module._compile (node:internal/modules/cjs/loader:1257:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1311:10)
+    at Module.load (node:internal/modules/cjs/loader:1115:32)
+    at Module._load (node:internal/modules/cjs/loader:962:12) {
+  code: 'ERR_INTERNAL_ASSERTION'
+}
+```
+
 ## Developing on `node inspect`
 
 ### Where Things Are
@@ -103,3 +130,4 @@ There's been a lot of attempts to improve the node REPL over the years:
 * https://github.com/danielgtaylor/nesh
 * https://github.com/wesgarland/niim lots of good ideas here, but was abandoned years ago.
 * https://github.com/11ways/janeway still actively developed, great object inspection
+* [longjohn](https://github.com/mattinsler/longjohn/blob/master/lib/longjohn.coffee) has some useful code around sourcemap support and async stack trace support
