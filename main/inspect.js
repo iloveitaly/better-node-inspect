@@ -1,3 +1,7 @@
+'use strict';
+
+// `node inspect ...` or `node debug ...`
+
 const {
   prepareMainThreadExecution,
   markBootstrapComplete,
